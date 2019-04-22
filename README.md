@@ -1,3 +1,6 @@
+Project updated for working with both CentOS7 and Ubuntu OS.
+
+
 LAMP Stack + HAProxy: Example Playbooks
 -----------------------------------------------------------------------------
 
