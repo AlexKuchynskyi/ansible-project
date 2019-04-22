@@ -1,0 +1,22 @@
+---
+- name: Working with errors
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Install smth
+    yum: name=treee state=present
+    ignore_errors: yes
+
+  - name: echo
+    shell: ls -al /home
+    register: result
+#    failed_when: "'hello' in results.stdout"
+    failed_when: result.rc == 0
+    
+  - debug:
+      var: result 
+
+  - name: echo2
+    shell: echo Privet
+
