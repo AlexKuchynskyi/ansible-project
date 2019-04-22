@@ -1,0 +1,25 @@
+---
+- name: Working with loops
+  hosts: centos 
+  become: yes
+
+  tasks:
+    - name: Print names in loop
+      debug: msg="Hello from {{ item }}"
+      loop:
+        - "Vasya"
+        - "Petya"
+        - "Masha"
+        - "Olya"
+
+    - name: example of Until loop
+      shell: echo -n W >> file_W.txt && cat file_W.txt
+      register: output
+      delay: 2 
+      retries: 10
+      until: output.stdout.find("WWWWW") == false
+
+    - name: Print final result
+      debug: 
+        var: output.stdout
+

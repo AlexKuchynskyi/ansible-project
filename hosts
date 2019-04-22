@@ -1,15 +1,27 @@
-[webservers]
-ansible-web         ansible_become=yes  ansible_become_method=sudo
-ansible-web2        ansible_become=yes  ansible_become_method=sudo
-
-[dbservers]
-ansible-mysql       ansible_become=yes  ansible_become_method=sudo
-
 [lbservers]
-ansible-haproxy     ansible_become=yes  ansible_become_method=sudo
+#ansible-haproxy          ansible_host=192.168.1.242    ansible_user=user_Ans       owner=Alex_centos
+ansible-haproxy          ansible_host=192.168.0.106    ansible_user=user_Ans       owner=Alex_centos
+#ansible-haproxy          ansible_host=172.20.10.9    ansible_user=user_Ans       owner=Alex_centos
 
 [monitoring]
-ansible-nagios      ansible_become=yes  ansible_become_method=sudo
+ansible_nagios           ansible_host=192.168.0.102    ansible_user=alex              owner=Ubuntu_user
+#ansible_nagios           ansible_host=172.20.10.8    ansible_user=al              owner=Ubuntu_user
+
+[dbservers]
+#ansible_mysql            ansible_host=192.168.1.129    ansible_user=alex            owner=Ubuntu_user
+ansible_mysql            ansible_host=192.168.0.107    ansible_user=alex            owner=Ubuntu_user
+#ansible_mysql            ansible_host=172.20.10.3    ansible_user=alex            owner=Ubuntu_user
 
 [redis]
-ansible-redis       ansible_become=yes  ansible_become_method=sudo
+#ansible_redis            ansible_host=192.168.1.174    ansible_user=alex            owner=Ubuntu_user
+ansible_redis            ansible_host=192.168.0.108    ansible_user=alex            owner=Ubuntu_user
+#ansible_redis            ansible_host=172.20.10.5    ansible_user=alex            owner=Ubuntu_user
+
+[webservers]
+#ansible-web              ansible_host=192.168.1.209    ansible_user=root            owner=CentOS_user
+#ansible-web              ansible_host=192.168.1.209    ansible_user=root            owner=CentOS_user
+ansible-web               ansible_host=192.168.0.109    ansible_user=alex            owner=Ubuntu_user
+ansible-web2              ansible_host=192.168.0.110    ansible_user=alex            owner=Ubuntu_user
+#ansible-web              ansible_host=172.20.10.6    ansible_user=alex            owner=Ubuntu_user
+#ansible-web2             ansible_host=172.20.10.7    ansible_user=alex            owner=Ubuntu_user
+

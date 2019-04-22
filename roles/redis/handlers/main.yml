@@ -2,7 +2,7 @@
 # Handlers for HAproxy
 
 - name: restart redis-server
+  become: true
   service: 
     name: redis-server 
     state: restarted
-

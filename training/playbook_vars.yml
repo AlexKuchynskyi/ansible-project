@@ -1,0 +1,37 @@
+---
+- name: Playbook for Variables lesson
+  hosts: all
+  become: yes
+
+  vars:
+    msg1: Hello
+    msg2: Ni Hao
+    text: qwwerty
+
+  tasks:
+    - name: Print text variable
+      debug: 
+        var: text
+
+    - debug:
+        msg: "Your word is {{ msg1 }} and {{ msg2 }} and {{ text }} as well..."
+    
+    - debug:
+        msg: "This server's owner is ----> {{ owner }}"
+
+    - set_fact: full_msg="Got {{ msg1 }}/{{ msg2 }} from {{ owner }}."
+
+    - debug: 
+        var: full_msg
+
+    - debug: 
+        var: ansible_distribution
+    
+    - shell: uptime -p
+      register: Uptime_cmd_result
+
+    - debug:
+        var: Uptime_cmd_result.stdout      
+
+
+

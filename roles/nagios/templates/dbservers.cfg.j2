@@ -1,7 +1,7 @@
-# {{ ansible_managed }}
+#{{ ansible_managed }}
 
 define hostgroup {
-	hostgroup_name dbservers 
+  hostgroup_name dbservers 
         alias Database Servers
 }
 
@@ -16,10 +16,10 @@ define hostgroup {
 {% endfor %}
 
 #define service {
-#	use				local-service
-#	hostgroup_name			dbservers
-#	service_description		MySQL Database Server
-#	check_command			check_mysql
-#	notifications_enabled		0
+# use       local-service
+# hostgroup_name      dbservers
+# service_description   MySQL Database Server
+# check_command     check_mysql
+# notifications_enabled   0
 #}
 

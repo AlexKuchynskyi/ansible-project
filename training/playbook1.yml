@@ -1,0 +1,65 @@
+---
+
+- hosts: test
+  become: 
+    true
+  become_method: 
+    sudo
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+  tasks:
+    - name: Update packages
+      apt:
+          update_cache: yes
+          upgrade: yes
+          cache_valid_time: 86400
+      tags: upgrade
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: latest
+    - name: Copy index.html
+      shell: echo 'Hello SASHA!!!' >/var/www/html/index.html
+      notify:
+        - restart nginx
+
+- hosts: local
+  become: 
+    true
+  become_method: 
+    sudo
+  handlers:
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted
+  tasks:
+    #- name: Update packages
+    #  apt:
+    ##      update_cache: yes
+    #      upgrade: yes
+    #      cache_valid_time: 86400 
+    #  tags: upgrade
+   
+    - name: upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+ 
+    - name: Install Apache2
+      package:
+        name: httpd
+        state: latest
+    - name: Copy index.html
+      copy:
+        src: /etc/ansible/index.html
+        dest: /var/www/html/index.html
+        remote_src: yes
+        mode: 0640
+        force: yes
+      notify:
+        - restart apache
+      tags: htmlfile

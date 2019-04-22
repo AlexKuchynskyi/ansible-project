@@ -1,7 +1,7 @@
 # {{ ansible_managed }}
 
 define hostgroup {
-	hostgroup_name loadbalancers 
+  hostgroup_name loadbalancers 
         alias Load Balancers
 }
 
@@ -14,9 +14,9 @@ define host {
         hostgroups              loadbalancers 
 }
 define service {
-	use				local-service
-	host_name			{{ host }}
-	service_description		HAProxy Load Balancer
-	check_command			check_http!-p{{ hostvars[host].listenport }}
+  use       local-service
+  host_name     {{ host }}
+  service_description   HAProxy Load Balancer
+  check_command     check_http!-p{{ hostvars[host].listenport }}
 }
 {% endfor %}

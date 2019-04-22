@@ -1,11 +1,13 @@
 ---
-# handlers for nagios
+# Handlers for nagios
 - name: restart apache2
+  become: true
   service: 
     name: apache2 
     state: restarted
 
 - name: restart nagios
+  become: true
   service: 
     name: nagios4 
     state: restarted

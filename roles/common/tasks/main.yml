@@ -1,28 +1,59 @@
 ---
 # This role contains common plays that will run on all nodes.
 - name: Update packages
+  become: true
   apt:
     update_cache: yes
     upgrade: "yes"
     cache_valid_time: 86400
   tags: upgrade
+  when: ansible_os_family=="Debian"
 
-- name: Install new packages
+- name: upgrade all packages (for Centos)
+  yum:
+    name: '*'
+    state: latest
+  when: ansible_os_family=="RedHat"
+
+- name: Install new packages (Ubuntu)
+  become: true
   apt: 
-    name: ['ntp', 'mc', 'htop', 'nagios-nrpe-plugin', 'nagios-plugins-standard']
+    name: [ntp, nagios-nrpe-plugin, nagios-plugins-standard]
+    update_cache: true
+    state: present 
+  when: ansible_os_family=="Debian"
+
+- name: Install new packages (CentOS)
+  become: true
+  yum: 
+    name: [ntp]
     update_cache: true
     state: present
+  when: ansible_os_family== "RedHat"
+
 
 - name: Configure ntp file
+  become: true
   template: 
     src: ntp.conf.j2 
     dest: /etc/ntp.conf
   tags: ntp
   notify: restart ntp
 
-- name: Start the ntp service
+- name: Start the ntp service (for Ubuntu)
+  become: true
   service: 
     name: ntp
     state: started 
     enabled: yes
+  when: ansible_os_family== "Debian"
   tags: ntp
+
+- name: Start the ntp service (for Centos)
+  become: true
+  service: 
+    name: ntpd
+    state: started 
+    enabled: yes
+  when: ansible_os_family== "RedHat"
+  tags: ntp   

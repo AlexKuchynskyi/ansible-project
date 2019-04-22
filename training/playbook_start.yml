@@ -1,0 +1,9 @@
+---
+- name: Test connetion to servers
+  hosts: all
+  become: true
+
+  tasks:
+
+  - name: Ping servers
+    ping:

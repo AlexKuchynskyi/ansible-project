@@ -1,23 +1,31 @@
 ---
 # This role installs HAProxy and configures it.
 
-- name: Download and install haproxy
-  apt: 
-    name: haproxy
-    update_cache: true
-    state: present
+- block:
+  #become: true
+   - name: Download and install haproxy
+  #become: true
+     yum: 
+       name: haproxy
+       update_cache: true
+       state: present
 
-- name: Configure the haproxy cnf file with hosts
-  template: 
-    src: haproxy.cfg.j2 
-    dest: /etc/haproxy/haproxy.cfg
-  notify: restart haproxy
+   - name: Configure the haproxy cnf file with hosts
+  # become: true
+     template: 
+       src: haproxy.cfg.j2 
+       dest: /etc/haproxy/haproxy.cfg
+     notify: restart haproxy
 
-- name: Start the haproxy service
-  service: 
-    name: haproxy 
-    state: started 
-    enabled: yes
 
-- name: Autostart haproxy
-  shell: update-rc.d haproxy defaults
+   - name: Start the haproxy service
+  # become: true
+    #shell: systemctl daemon-reload
+     service: 
+       name: haproxy 
+       state: started 
+       enabled: yes
+
+   - name: Autostart haproxy
+     shell: chkconfig haproxy on
+  become: true     
